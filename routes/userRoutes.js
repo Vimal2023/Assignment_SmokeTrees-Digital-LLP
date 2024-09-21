@@ -7,15 +7,10 @@ router.post('/register', async (req, res) => {
     const { name, street, city, country } = req.body;
 
     try {
-        // Create User first
         const user = new User({ name });
         await user.save();
-
-        // Create Address linked to User
         const address = new Address({ street, city, country, userId: user._id });
         await address.save();
-
-        // Link Address to User
         user.addresses.push(address._id);
         await user.save();
 
